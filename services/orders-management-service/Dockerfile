@@ -1,22 +1,36 @@
-# Stage 1 - build
+# apps/orders-management-service/Dockerfile
+################################
+# Stage 1: build
+################################
 FROM node:20-alpine AS builder
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# copy root package.json & workspace lockfile if needed:
+# copy workspace files first (speeds up cache)
 COPY package.json package-lock.json ./
 COPY apps/orders-management-service/package.json apps/orders-management-service/package.json
+COPY apps/orders-management-service/tsconfig.json apps/orders-management-service/tsconfig.json
+# copy the rest
 COPY . .
 
+# install deps (root workspace)
 RUN npm ci
-WORKDIR /app/apps/orders-management-service
+
+# build orders-management-service
+WORKDIR /usr/src/app/apps/orders-management-service
 RUN npm run build
 
-# Stage 2 - runtime
-FROM node:20-alpine AS runtime
-WORKDIR /app
+################################
+# Stage 2: production image
+################################
+FROM node:20-alpine AS runner
+WORKDIR /usr/src/app
 ENV NODE_ENV=production
-COPY --from=builder /app/apps/orders-management-service/dist ./dist
-COPY apps/orders-management-service/package.json ./package.json
+
+# copy built app from builder
+COPY --from=builder /usr/src/app/apps/orders-management-service/dist ./dist
+COPY --from=builder /usr/src/app/apps/orders-management-service/package.json ./package.json
+# install only production deps for orders-management-service
 RUN npm ci --production
+
 EXPOSE 3001
 CMD ["node", "dist/main.js"]
