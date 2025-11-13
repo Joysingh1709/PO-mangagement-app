@@ -3,8 +3,6 @@ name: Deploy orders-management-service (Orders API Service)
 on: 
   push:
     branches: [ "master" ]   # master branch only
-    paths:
-      - 'services/orders-management-service/**'
 permissions:
   contents: read
   packages: write

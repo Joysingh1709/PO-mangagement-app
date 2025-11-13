@@ -2,7 +2,7 @@ name: Deploy Client App (PO-Client-Next)
 
 on: 
   push:
-    branches: [ "**" ]   # all branches
+    branches: [ "master" ]
 jobs:
   build:
     runs-on: ubuntu-latest
