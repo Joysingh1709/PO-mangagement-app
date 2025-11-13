@@ -2,7 +2,7 @@ name: Deploy Client App (PO-Client-Next)
 
 on: 
   push:
-    branches: [ "master" ]   # master branch only
+    branches: [ "**" ]   # all branches
     paths:
       - 'services/client-next/**'
 jobs:
@@ -27,4 +27,5 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: apps/client-next
+          working-directory: services/client-next
+
