@@ -29,6 +29,7 @@ ENV NODE_ENV=production
 # copy built app from builder
 COPY --from=builder /usr/src/app/services/orders-management-service/dist ./dist
 COPY --from=builder /usr/src/app/services/orders-management-service/package.json ./package.json
+COPY --from=builder /usr/src/app/services/orders-management-service/package-lock.json ./package-lock.json
 # install only production deps for orders-management-service
 RUN npm ci --omit=dev
 
