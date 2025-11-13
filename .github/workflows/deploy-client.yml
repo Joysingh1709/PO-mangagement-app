@@ -3,8 +3,6 @@ name: Deploy Client App (PO-Client-Next)
 on: 
   push:
     branches: [ "**" ]   # all branches
-    paths:
-      - 'services/client-next/**'
 jobs:
   build:
     runs-on: ubuntu-latest
