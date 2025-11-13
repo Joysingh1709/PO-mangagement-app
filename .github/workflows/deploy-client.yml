@@ -18,11 +18,6 @@ jobs:
       - name: Build Next.js
         working-directory: services/client-next
         run: npm run build
-      - name: Evaluate Env Variables
-        run: |
-          echo "VERCEL_TOKEN — ${{ secrets.VERCEL_TOKEN }}"
-          echo "VERCEL_ORG_ID = ${{ secrets.VERCEL_ORG_ID }}"
-          echo "VERCEL_PROJECT_ID  = ${{ secrets.VERCEL_PROJECT_ID }}"
       - name: Vercel deploy
         uses: amondnet/vercel-action@v20
         with:

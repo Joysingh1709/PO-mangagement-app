@@ -10,8 +10,6 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    env:
-      IMAGE: ghcr.io/${{ github.repository_owner }}/orders-management-service:${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,17 +26,33 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Build and push image
+      - name: Convert repo owner to lowercase
+        id: owner
         run: |
-          docker build -t $IMAGE -f services/orders-management-service/Dockerfile .
-          docker push $IMAGE
+          # convert github.repository_owner to lowercase and expose as output
+          echo "owner_lc=${OWNER,,}" >> $GITHUB_OUTPUT
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - name: Build and push image
+        env:
+          OWNER_LC: ${{ steps.owner.outputs.owner_lc }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE=ghcr.io/${OWNER_LC}/orders-management-service:${IMAGE_TAG}
+          echo "Building image: $IMAGE"
+          docker build -t "$IMAGE" -f services/orders-management-service/Dockerfile .
+          docker push "$IMAGE"
 
       - name: Trigger Render deploy
         env:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_ORDERS_SERVICE_ID }}
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
+          if [ -z "$RENDER_SERVICE_ID" ] || [ -z "$RENDER_API_KEY" ]; then
+            echo "Render deploy skipped: RENDER_ORDERS_SERVICE_ID or RENDER_API_KEY not set."
+            exit 0
+          fi
+
           curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
