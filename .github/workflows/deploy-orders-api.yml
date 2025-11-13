@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'apps/orders-management-service/**'
+      - 'services/orders-management-service/**'
   pull_request:
     branches: [ "master" ]
     paths:
-      - 'apps/orders-management-service/**'
+      - 'services/orders-management-service/**'
 
 permissions:
   contents: read

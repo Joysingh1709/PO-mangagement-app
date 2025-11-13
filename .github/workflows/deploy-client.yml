@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'apps/client-next/**'
+      - 'services/client-next/**'
   pull_request:
     branches: [ "master" ]
     paths:
-      - 'apps/client-next/**'
+      - 'services/client-next/**'
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies (root / workspace)
         run: npm ci
       - name: Build Next.js
-        working-directory: apps/client-next
+        working-directory: services/client-next
         run: npm run build
       # Option A: If you are using Vercel Git integration, nothing else needed (Vercel auto deploys)
       # Option B: Trigger Vercel deploy via vercel-action (uncomment and set secrets)
