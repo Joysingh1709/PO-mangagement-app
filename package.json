@@ -3,15 +3,34 @@
   "version": "1.0.0",
   "main": "index.js",
   "workspaces": [
-    "apps/*",
+    "services/*",
     "packages/*"
   ],
   "scripts": {
-    "dev:client": "npm --workspace=apps/client-next run dev",
-    "dev:orders": "npm --workspace=apps/orders-management-service run start:dev",
-    "dev:products": "npm --workspace=apps/products-management-service run start:dev"
+    "dev": "npm-run-all -p dev:client dev:orders dev:products",
+    "dev:client": "npm --workspace=services/client-next run dev",
+    "dev:orders": "npm --workspace=services/orders-management-service run start:dev",
+    "dev:products": "npm --workspace=services/products-management-service run start:dev",
+
+    "build": "npm-run-all build:client build:orders build:products",
+    "build:client": "npm --workspace services/client-next run build",
+    "build:orders": "npm --workspace services/orders-management-service run build",
+    "build:products": "npm --workspace services/products-management-service run build",
+
+    "test": "npm-run-all test:client test:orders test:products",
+    "test:client": "npm --workspace services/client-next run test --if-present",
+    "test:orders": "npm --workspace services/orders-management-service run test --if-present",
+    "test:products": "npm --workspace services/products-management-service run test --if-present",
+
+    "lint": "npm-run-all lint:client lint:orders lint:products",
+    "lint:client": "npm --workspace services/client-next run lint --if-present",
+    "lint:orders": "npm --workspace services/orders-management-service run lint --if-present",
+    "lint:products": "npm --workspace services/products-management-service run lint --if-present"
   },
-  "author": "",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "author": "Joy Singh",
   "license": "ISC",
   "description": "Designing and Implementation of a Microservice-based Application for Products and Orders management."
 }

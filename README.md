@@ -128,8 +128,9 @@ npm --workspace=apps/client-next run start
 # Frontend linting
 npm --workspace=apps/client-next run lint
 
-# Orders service development server
-npm --workspace=apps/orders-management-service run start:dev
+- **Client Frontend** (`services/client-next`): A modern Next.js 16 application with React 19, providing an intuitive user interface for managing purchase orders.
+- **Orders Management Service** (`services/orders-management-service`): A NestJS 11-based backend microservice handling all order-related operations, business logic, and API endpoints.
+- **Products Management Service** (`services/products-management-service`): Reserved for future product-related microservice implementation.
 
 # Orders service production server
 npm --workspace=apps/orders-management-service run start:prod
@@ -143,7 +144,10 @@ npm --workspace=apps/orders-management-service run test
 
 ## Building for Production
 
-### Build Frontend
+│   └── products-management-service/ # Future product service (currently empty)
+├── services/                         # Shared libraries (currently empty)
+├── package.json                      # Root workspace configuration
+└── README.md                         # This file
 
 ```bash
 npm --workspace=apps/client-next run build
@@ -157,6 +161,8 @@ Output: `apps/client-next/.next` directory
 npm --workspace=apps/orders-management-service run build
 ```
 
+
+Note: The root `package.json` uses `npm-run-all` to run multiple workspace scripts in parallel. `npm install` installs this as a devDependency.
 Output: `apps/orders-management-service/dist` directory
 
 ## Testing
@@ -187,8 +193,6 @@ npm --workspace=apps/orders-management-service run test:e2e
 
 ## Linting & Code Formatting
 
-### Lint Frontend
-
 ```bash
 npm --workspace=apps/client-next run lint
 ```
@@ -201,8 +205,6 @@ npm --workspace=apps/orders-management-service run lint
 
 ### Format Code (Orders Service)
 
-```bash
-npm --workspace=apps/orders-management-service run format
 ```
 
 Formats TypeScript files in `src/` and `test/` directories using Prettier.
