@@ -10,8 +10,6 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    env:
-      IMAGE: ghcr.io/${{ github.repository_owner }}/products-management-service:${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,11 +26,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Build and push image
+      - name: Convert repo owner to lowercase
+        id: owner
         run: |
-          docker build -t $IMAGE -f services/products-management-service/Dockerfile .
-          docker push $IMAGE
+          # convert github.repository_owner to lowercase and expose as output
+          echo "owner_lc=${OWNER,,}" >> $GITHUB_OUTPUT
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - name: Build and push image
+        env:
+          OWNER_LC: ${{ steps.owner.outputs.owner_lc }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE=ghcr.io/${OWNER_LC}/products-management-service:${IMAGE_TAG}
+          echo "Building image: $IMAGE"
+          docker build -t "$IMAGE" -f services/products-management-service/Dockerfile .
+          docker push "$IMAGE"
 
       - name: Trigger Render deploy 
         env:

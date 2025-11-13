@@ -30,7 +30,7 @@ ENV NODE_ENV=production
 COPY --from=builder /usr/src/app/services/orders-management-service/dist ./dist
 COPY --from=builder /usr/src/app/services/orders-management-service/package.json ./package.json
 # install only production deps for orders-management-service
-RUN npm ci --production
+RUN npm ci --omit=dev
 
 EXPOSE 3001
 CMD ["node", "dist/main.js"]
