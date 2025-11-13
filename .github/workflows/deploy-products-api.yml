@@ -1,15 +1,10 @@
 name: Deploy products-management-service (Products API Service)
 
-on:
+on: 
   push:
-    branches: [ "master" ]
+    branches: [ "master" ]   # master branch only
     paths:
       - 'services/products-management-service/**'
-  pull_request:
-    branches: [ "master" ]
-    paths:
-      - 'services/products-management-service/**'
-
 permissions:
   contents: read
   packages: write

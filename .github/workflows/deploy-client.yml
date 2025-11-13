@@ -1,15 +1,10 @@
 name: Deploy Client App (PO-Client-Next)
 
-on:
+on: 
   push:
-    branches: [ "master" ]
+    branches: [ "master" ]   # master branch only
     paths:
       - 'services/client-next/**'
-  pull_request:
-    branches: [ "master" ]
-    paths:
-      - 'services/client-next/**'
-
 jobs:
   build:
     runs-on: ubuntu-latest
