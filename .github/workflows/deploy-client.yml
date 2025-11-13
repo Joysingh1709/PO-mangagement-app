@@ -20,8 +20,6 @@ jobs:
       - name: Build Next.js
         working-directory: services/client-next
         run: npm run build
-      # Option A: If you are using Vercel Git integration, nothing else needed (Vercel auto deploys)
-      # Option B: Trigger Vercel deploy via vercel-action (uncomment and set secrets)
       - name: Vercel deploy
         uses: amondnet/vercel-action@v20
         with:
