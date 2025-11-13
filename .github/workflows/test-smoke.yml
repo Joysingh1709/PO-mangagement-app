@@ -2,7 +2,7 @@
 name: CI Smoke Test
 on: 
   push:
-    branches: [ "**" ]   # all branches
+    branches: [ "master" ]   # master branch only
 jobs:
   hello:
     runs-on: ubuntu-latest
