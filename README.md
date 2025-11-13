@@ -26,7 +26,7 @@ A comprehensive monorepo application for managing purchase orders. This project 
 
 ```
 .
-├── apps/
+├── services/
 │   ├── client-next/                 # Next.js frontend application
 │   │   ├── src/app/                 # App router directory
 │   │   ├── package.json             # Frontend dependencies
