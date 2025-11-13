@@ -24,7 +24,7 @@ ENV NODE_ENV=production
 
 COPY --from=builder /usr/src/app/services/products-management-service/dist ./dist
 COPY --from=builder /usr/src/app/services/products-management-service/package.json ./package.json
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 EXPOSE 3002
 CMD ["node", "dist/main.js"]
