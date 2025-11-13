@@ -1,6 +1,6 @@
-# PO Management App
+# Product and Order Management App
 
-A comprehensive monorepo application for managing purchase orders (PO). This project follows a workspace-based architecture with a modern frontend and backend microservices.
+A comprehensive monorepo application for managing purchase orders. This project follows a workspace-based architecture with a modern frontend and backend microservices.
 
 ## Project Overview
 
