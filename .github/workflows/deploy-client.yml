@@ -2,7 +2,7 @@ name: Deploy Client App (PO-Client-Next)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "**" ]
     paths:
       - 'services/client-next/**'
   pull_request:
