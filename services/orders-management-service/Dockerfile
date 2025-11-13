@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 # copy workspace files first (speeds up cache)
 COPY package.json package-lock.json ./
 COPY services/orders-management-service/package.json services/orders-management-service/package.json
-COPY services/orders-management-service/package-lock.json services/orders-management-service/package-lock.json
 COPY services/orders-management-service/tsconfig.json services/orders-management-service/tsconfig.json
 # copy the rest
 COPY . .
@@ -28,6 +27,8 @@ WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
 # copy built app from builder
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/package-lock.json ./package-lock.json
 COPY --from=builder /usr/src/app/services/orders-management-service/dist ./dist
 COPY --from=builder /usr/src/app/services/orders-management-service/package.json ./package.json
 # install only production deps for orders-management-service
