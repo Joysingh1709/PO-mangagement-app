@@ -6,6 +6,7 @@ on:
     paths:
       - 'apps/products-management-service/**'
   pull_request:
+    branches: [ "master" ]
     paths:
       - 'apps/products-management-service/**'
 

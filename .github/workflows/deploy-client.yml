@@ -6,6 +6,7 @@ on:
     paths:
       - 'apps/client-next/**'
   pull_request:
+    branches: [ "master" ]
     paths:
       - 'apps/client-next/**'
 
