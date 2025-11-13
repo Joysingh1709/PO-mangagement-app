@@ -1,0 +1,15 @@
+# .github/workflows/test-smoke.yml
+name: CI Smoke Test
+on: 
+  push:
+    branches: [ "**" ]   # all branches
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print hello
+        run: |
+          echo "Hello — GitHub Actions are working!"
+          echo "GITHUB_REF = $GITHUB_REF"
+          echo "GITHUB_SHA  = $GITHUB_SHA"
+          echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
