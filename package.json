@@ -1,0 +1,17 @@
+{
+  "name": "po-management-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:client": "npm --workspace=apps/client-next run dev",
+    "dev:orders": "npm --workspace=apps/orders-management-service run start:dev",
+    "dev:products": "npm --workspace=apps/products-management-service run start:dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
