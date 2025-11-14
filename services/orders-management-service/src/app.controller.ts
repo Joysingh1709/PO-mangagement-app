@@ -4,8 +4,9 @@ import { OrderService } from './services/orders.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService,
-    private orderService: OrderService
+  constructor(
+    private readonly appService: AppService,
+    private orderService: OrderService,
   ) {}
 
   @Get()
