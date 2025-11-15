@@ -16,7 +16,7 @@ type Order = {
   productId: string;
   productName?: string;
   quantity: number;
-  total: number;
+  totalAmount: string;
   status: string;
   createdAt: string;
 };
@@ -59,6 +59,7 @@ export default function Home() {
         const res = await fetch("https://orders-management-service-latest.onrender.com/orders");
         if (!res.ok) throw new Error(`Orders fetch failed: ${res.status}`);
         const data = await res.json();
+        console.log("Fetched orders:", data);
         setOrders(data || []);
       } catch (err: any) {
         setErrorOrders(err.message || "Unknown error");
@@ -212,7 +213,7 @@ export default function Home() {
                         <h3 className="font-semibold text-md">{p.name}</h3>
                         <p className="text-sm text-gray-500 mt-2 line-clamp-3">{p.description}</p>
                         <div className="mt-4 flex items-center justify-between">
-                          <div className="font-semibold">₹{p.price.toFixed(2)}</div>
+                          <div className="font-semibold">₹{p.price?.toFixed(2)}</div>
                           <div className={`text-sm px-2 py-1 rounded ${p.available ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                             {p.available ? 'In stock' : 'Out of stock'}
                           </div>
@@ -253,7 +254,7 @@ export default function Home() {
                           <td className="px-4 py-3">{o.id.slice(0, 8)}</td>
                           <td className="px-4 py-3">{o.productName || o.productId}</td>
                           <td className="px-4 py-3">{o.quantity}</td>
-                          <td className="px-4 py-3">₹{o.total.toFixed(2)}</td>
+                          <td className="px-4 py-3">₹{Number(o.totalAmount)?.toFixed(2)}</td>
                           <td className="px-4 py-3">
                             <span className={`px-2 py-1 rounded text-xs ${o.status === 'delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
                               {o.status}
